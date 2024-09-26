@@ -1,0 +1,22 @@
+#Secenario : How does Kubernetes handle container scaling ?
+
+# Kubernetes manages the deployment / stateful workload using Horizontal Pod Scaling based on Workload such as resource utilization CPU/Memory
+
+apiVersion:autoscaling/v2beta2
+kind:HorizontalPodScaler
+metadata:
+  name:my-hpa
+  spec:
+    scaleTargetRef:
+      apiVersion:app/v1
+    kind:Deployement # or Statefulset,
+    name:my-deployement
+    minReplicas:3
+    maxReplicas:5
+    metrics:
+      -type:Resource
+    resource:
+      name:CPU
+    target:
+      type:Utilization
+    averageUtilization:80
